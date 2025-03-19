@@ -19,8 +19,16 @@ jobs:
         include:
           - dockerfile: Dockerfile
             epics_version: R7.0.8.1
+            arch: amd64
+          - dockerfile: Dockerfile
+            epics_version: R7.0.8.1
+            arch: arm64
           - dockerfile: Dockerfile
             epics_version: R7.0.9
+            arch: amd64
+          - dockerfile: Dockerfile
+            epics_version: R7.0.9
+            arch: arm64
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
@@ -38,7 +46,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/epics-base
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/epics-base-${{ matrix.arch }}
           tags: |
             type=raw,value=${{ matrix.epics_version }}
           labels: |
@@ -56,3 +64,4 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             EPICS_VERSION=${{ matrix.epics_version }}
+            TARGETARCH=${{ matrix.arch }}
