@@ -35,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/epics-base-${{ matrix.arch }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/epics-base
           tags: |
             type=raw,value=${{ matrix.epics_version }}
           labels: |
